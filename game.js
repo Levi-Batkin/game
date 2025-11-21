@@ -433,9 +433,13 @@ class MovingPlatform extends Platform {
         );
         
         // Reverse direction if at either endpoint
-        if (distToEnd < this.speed) {
+        if (distToEnd <= this.speed) {
+            this.x = this.endX;
+            this.y = this.endY;
             this.direction = -1;
-        } else if (distToStart < this.speed) {
+        } else if (distToStart <= this.speed) {
+            this.x = this.startX;
+            this.y = this.startY;
             this.direction = 1;
         }
     }
@@ -774,8 +778,11 @@ class Game {
      * Handle switch collision (activate doors)
      */
     handleSwitchCollision(char, switchObj) {
-        // Activate the switch if character is standing on it
-        if (char.isOnGround && char.y + char.height >= switchObj.y) {
+        // Activate the switch if character is standing on it from above
+        // Check character is above the switch with some tolerance
+        if (char.isOnGround && 
+            char.y + char.height <= switchObj.y + 5 &&
+            char.y + char.height >= switchObj.y - 5) {
             switchObj.isPressed = true;
         }
     }
@@ -812,16 +819,6 @@ class Game {
         if (!this.fireBoy.isAlive && !this.waterGirl.isAlive) {
             this.gameOver = true;
             this.showGameOver("Both players died!");
-        } else if (!this.fireBoy.isAlive || !this.waterGirl.isAlive) {
-            // One character died
-            const deadChar = !this.fireBoy.isAlive ? "Fire Boy" : "Water Girl";
-            
-            // Check if surviving character fell off screen
-            const survivor = this.fireBoy.isAlive ? this.fireBoy : this.waterGirl;
-            if (survivor.y > canvas.height) {
-                this.gameOver = true;
-                this.showGameOver(`${deadChar} died and the other fell!`);
-            }
         }
     }
 
