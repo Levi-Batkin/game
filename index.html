@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire & Water - Cooperative Puzzle Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Game container with canvas for rendering -->
+    <div class="game-container">
+        <!-- Game title and info section -->
+        <div class="game-header">
+            <h1>Fire & Water</h1>
+            <div class="info-bar">
+                <div class="level-info">Level: <span id="current-level">1</span></div>
+                <div class="score-info">Score: <span id="score">0</span></div>
+            </div>
+        </div>
+
+        <!-- Main game canvas where everything is rendered -->
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+        <!-- Controls information -->
+        <div class="controls-info">
+            <div class="control-set">
+                <div class="control-char fire">🔥 Fire Boy</div>
+                <div class="control-keys">Arrow Keys: Move & Jump</div>
+            </div>
+            <div class="control-set">
+                <div class="control-char water">💧 Water Girl</div>
+                <div class="control-keys">WASD: Move & Jump</div>
+            </div>
+        </div>
+
+        <!-- Victory modal (hidden by default) -->
+        <div id="victory-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>🎉 Congratulations! 🎉</h2>
+                <p>You completed all levels!</p>
+                <p class="final-score">Final Score: <span id="final-score">0</span></p>
+                <button onclick="game.restartGame()">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Game Over modal (hidden by default) -->
+        <div id="gameover-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>💀 Game Over 💀</h2>
+                <p id="death-message">Both players died!</p>
+                <button onclick="game.restartLevel()">Restart Level</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the main game script -->
+    <script src="game.js"></script>
+</body>
+</html>
